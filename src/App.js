@@ -7,26 +7,24 @@ function App() {
   const [userName, setUserName] = useState("esadakman");
   const [loading, setLoading] = useState(false);
   const [info, setInfo] = useState([]);
-  const [details, setDetails] = useState({})
-  const [detailsLoading, setDetailsLoading] = useState(false)
-  const [repoName, setRepoName] = useState("")
+  const [details, setDetails] = useState({});
+  const [detailsLoading, setDetailsLoading] = useState(false);
+  // const [repoName, setRepoName] = useState("")
 
-  const githubUserUrl = `https://api.github.com/users/${userName}`
-  const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=50`
-  const githubRepoUrl = `https://api.github.com/users/${userName}/${repoName}`
+  // const githubUserUrl = `https://api.github.com/users/${userName}`
+  const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=10`;
+  // const githubRepoUrl = `https://api.github.com/users/${userName}/${repoName}`
   // const stackUserUrl = `https://api.stackexchange.com/2.3/users?order=desc&sort=reputation&site=stackoverflow`
 
   function handleSubmit(e) {
     e.preventDefault();
     searchUser();
   }
- 
+
   const searchUser = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(
-        githubRepos
-      );
+      const { data } = await axios.get(githubRepos);
       setInfo(data);
       setLoading(false);
       console.log(data);
@@ -37,46 +35,40 @@ function App() {
 
   useEffect(() => {
     searchUser();
-    setDetails()
+    setDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userName]);
 
-
-  // const getDetails = async (repoName) =>{
-  //   setDetailsLoading(true);
-  //   try {
-  //     const { data } = await axios.get(
-  //       githubRepoUrl
-  //     );
-  //     setDetails(data);
-  //     setDetailsLoading(false);
-  //     // console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   function getDetails(repoName) {
     setDetailsLoading(true);
     axios({
-      method:'get',
+      method: "get",
       url: `https://api.github.com/repos/${userName}/${repoName}`,
-    }).then(res=> {
+    }).then((res) => {
       setDetailsLoading(false);
       setDetails(res.data);
-    })
-    
+    });
   }
-  
-   
-  function renderRepo(repo){
-    return(
-      <div className="row" key={repo.id} onClick={()=>getDetails(repo.name)} 
-      >
-        <h2 className="repo-name">
-          {repo.name}
-        </h2>
+
+  function renderRepo(repo) {
+    return (
+      <div className="row" key={repo.id} onClick={() => getDetails(repo.name)}>
+        <h2 className="repo-name">{repo.name}</h2>
       </div>
-    )
+    );
+  }
+  function renderTable(repo) {
+    return (
+       
+        
+        <tr key={repo.id} >
+            <th scope="row">1</th>
+            <td >{repo.name}</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+    );
   }
 
   return (
@@ -92,7 +84,7 @@ function App() {
                 placeholder="GitHub Username"
                 onChange={(e) => setUserName(e.target.value)}
               />
-              <button className="button" onClick={handleSubmit}>
+              <button className="button btn btn-success" onClick={handleSubmit}>
                 {loading ? "Searching .." : "Search"}
               </button>
             </form>
@@ -103,6 +95,32 @@ function App() {
           <RepoDetails details={details} loading={detailsLoading} />
         </div>
       </div>
+      {/* <div className="row">
+      <table className="table ms-2" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          
+           
+              {info.map(renderTable) } 
+             
+              
+             
+        </tbody>
+      </table>
+      </div> */}
     </div>
   );
 }

@@ -6,11 +6,12 @@ const RepoDetails = ({details, loading}) => {
             <h1 className="loader">Loading...</h1>
         )
     }
+    console.log(details);
   return (
     <div>
-        <div className="repo-details-container">
+        <div className="repo-details-container ">
             <div className="details-row">
-                <label  className="label">Name:</label>
+                <label  className="label ">Name:</label>
                 <span className="value">{details?.name}</span>
             </div>
             <div className="details-row">
@@ -27,7 +28,7 @@ const RepoDetails = ({details, loading}) => {
             </div>
             <div className="details-row">
                 <label className="label">Go to the repo:</label>
-                <a href={details?.deployments_url}> Link</a>
+                <a href={details?.html_url} target='blank'> Link</a>
                 {/* <span className="value">{details?.deployments_url}</span> */}
             </div>
 
