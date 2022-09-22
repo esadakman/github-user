@@ -1,16 +1,13 @@
 import React from "react";
 
 const ProfileCard = ({ info }) => {
-  console.log(info);
+  //   console.log(info);
   return (
     // <section className="vh-100" style={{backgroundColor: '#eee'}}>
-    <div className="container  h-100 border border-danger">
-      <div className="row  h-100 ">
+    <div className="container  h-100 ">
+      <div className="row  h-100 d-flex align-items-center">
         <div className="col-12 ">
-          <div
-            className="card bg-dark text-bg-dark"
-            style={{ borderRadius: "1rem" }}
-          >
+          <div className="card bg-dark text-bg-dark rounded">
             <div className="card-body text-center">
               <div className="mt-3 mb-4">
                 <img
@@ -21,14 +18,15 @@ const ProfileCard = ({ info }) => {
                 />
               </div>
               <h4 className="mb-2">{info?.login}</h4>
-              <p className="text-muted mb-4">{info?.bio}</p>
-              
+              <p className="text-muted ">{info?.bio}</p>
+              <p className="text-muted ">{info?.location}</p>
+
               <a
-                href={info?.html_url} 
-                target="blank" 
+                href={info?.html_url}
+                target="blank"
                 className="btn btn-primary btn-rounded btn-lg"
               >
-                Github Profile
+                Visit Profile
               </a>
               <div className="d-flex justify-content-between text-center mt-5 p-2">
                 <div>
