@@ -1,4 +1,4 @@
-.page {
+/* .page {
   height: 100vh;
   width: 100%;
 }
@@ -136,4 +136,28 @@
 .loader {
   color: salmon;
   margin-left: 5%;
-}
+} */
+
+
+.search{
+  position: relative;  
+  }
+
+  .search input{ 
+   /* height: 60px; */
+   text-indent: 25px;
+   border: 2px solid #d6d4d4; 
+  }
+
+
+  .search input:focus{ 
+   box-shadow: none;  
+  }
+
+  .search .fa-search{ 
+   position: absolute;
+   top: 20px;
+   left: 20px; 
+  }
+
+ 
