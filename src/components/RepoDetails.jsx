@@ -1,40 +1,31 @@
-import React from 'react'
+import React from "react";
 
-const RepoDetails = ({details, loading}) => {
-    if (loading) {
-        return (
-            <h1 className="loader">Loading...</h1>
-        )
-    }
-    console.log(details);
+const RepoDetails = ({ repoInfo }) => {
+  const { details, detailsLoading } = repoInfo;
+  if (detailsLoading) {
+    return <h1 className="loader">detailsLoading...</h1>;
+  }
+  console.log(details);
   return (
     <div>
-        <div className="repo-details-container ">
-            <div className="details-row">
-                <label  className="label ">Name:</label>
-                <span className="value">{details?.name}</span>
-            </div>
-            <div className="details-row">
-                <label className="label">Forks Count:</label>
-                <span className="value">{details?.forks}</span>
-            </div>
-            <div className="details-row">
-                <label className="label">Language:</label>
-                <span className="value">{details?.language}</span>
-            </div>
-            <div className="details-row">
-                <label className="label">Stars:</label>
-                <span className="value">{details?.stargazers_count}</span>
-            </div>
-            <div className="details-row">
-                <label className="label">Go to the repo:</label>
-                <a href={details?.html_url} target='blank'> Link</a>
-                {/* <span className="value">{details?.deployments_url}</span> */}
-            </div>
-
-        </div>
+      <div className="card mt-4" style={{ width: "18rem" }}>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">Name: {details?.name}</li>
+          <li className="list-group-item">Forks: {details?.forks}</li>
+          <li className="list-group-item">Stars: {details?.stargazers_count}</li>
+          <li className="list-group-item">Language: {details?.language}</li>
+          <li className="list-group-item">
+            Repo Link:{" "}
+            <a href={details?.html_url} target="blank">
+              Link
+            </a>
+          </li>
+        </ul>
+      </div>
+       
+       
     </div>
-  )
-}
+  );
+};
 
-export default RepoDetails
+export default RepoDetails;

@@ -1,18 +1,19 @@
 import axios from "axios";
 import React, { useState } from "react";
 import PaginateRepos from "../components/PaginateRepos";
+import ProfileCard from "../components/ProfileCard";
 
 const Home = () => {
   const [userName, setUserName] = useState("esadakman");
   const [loading, setLoading] = useState(false);
   const [info, setInfo] = useState([]);
-  const [repos, setRepos] = useState([])
+  const [repos, setRepos] = useState([]);
   //   const [details, setDetails] = useState({});
   //   const [detailsLoading, setDetailsLoading] = useState(false);
   // const [repoName, setRepoName] = useState("")
 
   const githubUserUrl = `https://api.github.com/users/${userName}`;
-    const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=100`;
+  const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=100`;
   // const githubRepoUrl = `https://api.github.com/users/${userName}/${repoName}`
   // const stackUserUrl = `https://api.stackexchange.com/2.3/users?order=desc&sort=reputation&site=stackoverflow`
 
@@ -21,38 +22,37 @@ const Home = () => {
     try {
       const { data } = await axios.get(githubUserUrl);
       setInfo(data);
-    //   setRepos(data.repos_url)
-      console.log(repos)
+      //   setRepos(data.repos_url)
+      console.log(repos);
       setLoading(false);
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   const searchRepos = async () => {
     // setLoading(true);
     try {
       const { data } = await axios.get(githubRepos);
-    //   setInfo(data);
-      setRepos(data)
-      console.log(repos)
-    //   setLoading(false);
+      //   setInfo(data);
+      setRepos(data);
+      console.log(repos);
+      //   setLoading(false);
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-
   function handleSubmit(e) {
     e.preventDefault();
     searchUser();
-    searchRepos()
+    searchRepos();
   }
 
   return (
-    <div className="container-fluid my-3">
+    <div className="container-fluid my-3 ">
       <div className="row height d-flex justify-content-center align-items-center">
         <div className="col-md-6">
           <div className="search d-flex p-2">
@@ -70,69 +70,18 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      {/* ! Cols */}
-      <div className="row border border-danger ">
-        <div className="col-3 border border-danger">
-          <div className="text-center card-box bg-dark text-bg-danger">
-            <div className="member-card pt-2 pb-2">
-              <div className="thumb-lg member-thumb mx-auto">
-                <img
-                  src={info?.avatar_url}
-                  className="rounded-circle img-thumbnail w-50"
-                  alt="pp"
-                />
-              </div>
-              <div className="">
-                <h4>{info?.login}</h4>
-                <p className="text-muted">
-                  <a href={info?.html_url} className="text-pink" target="blank">
-                    GitHub Page
-                  </a>
-                </p>
-              </div>
-
-              <button
-                type="button"
-                className="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light"
-              >
-                Message Now
-              </button>
-              <div className="mt-4">
-                <div className="row">
-                  <div className="col-4">
-                    <div className="mt-3">
-                      <h4>{info?.followers}</h4>
-                      <p className="mb-0 text-muted">Followers</p>
-                    </div>
-                  </div>
-                  <div className="col-4">
-                    <div className="mt-3">
-                      <h4>{info?.following}</h4>
-                      <p className="mb-0 text-muted">Following</p>
-                    </div>
-                  </div>
-                  <div className="col-4">
-                    <div className="mt-3">
-                      <h4>{info?.public_repos}</h4>
-                      <p className="mb-0 text-muted">Repos</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* // ! Cols */}
+      <div className="row  d-flex gap-2 justify-content-center  flex-wrap">
+        <div className="col-lg-3 col-md-6 col-sm-6  "> 
+          <ProfileCard info={info} />
         </div>
-        <div className="col-6 border border-danger">
-           
-           
-              <PaginateRepos pagiData={{repos, loading}}/>
-              {/* <PaginateRepos pagiData={repos}/> */}
-             
+        <div className="col-lg-8   p-0 ">
+          <PaginateRepos pagiData={{ repos, loading, userName }} />
+          {/* <PaginateRepos pagiData={repos}/> */}
         </div>
-        <div className="col-3 border border-danger">3 of 3</div>
+        {/* <div className="col-3 border border-danger">3 of 3</div> */}
       </div>
-      
+     
     </div>
   );
 };
