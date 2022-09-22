@@ -12,7 +12,7 @@ const Home = () => {
   // const [repoName, setRepoName] = useState("")
 
   const githubUserUrl = `https://api.github.com/users/${userName}`;
-  //   const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=10`;
+    const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=100`;
   // const githubRepoUrl = `https://api.github.com/users/${userName}/${repoName}`
   // const stackUserUrl = `https://api.stackexchange.com/2.3/users?order=desc&sort=reputation&site=stackoverflow`
 
@@ -21,17 +21,34 @@ const Home = () => {
     try {
       const { data } = await axios.get(githubUserUrl);
       setInfo(data);
-      setRepos(data.repos_url)
+    //   setRepos(data.repos_url)
+      console.log(repos)
       setLoading(false);
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
+  
+  const searchRepos = async () => {
+    // setLoading(true);
+    try {
+      const { data } = await axios.get(githubRepos);
+    //   setInfo(data);
+      setRepos(data)
+      console.log(repos)
+    //   setLoading(false);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   function handleSubmit(e) {
     e.preventDefault();
     searchUser();
+    searchRepos()
   }
 
   return (
@@ -57,7 +74,7 @@ const Home = () => {
       {/* ! Cols */}
       <div className="row border border-danger ">
         <div className="col-3 border border-danger">
-          <div className="text-center card-box">
+          <div className="text-center card-box bg-dark text-bg-danger">
             <div className="member-card pt-2 pb-2">
               <div className="thumb-lg member-thumb mx-auto">
                 <img
@@ -106,29 +123,16 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="col-5 border border-danger">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* <PaginateRepos pagiData={{repos, loading}}/> */}
-              <PaginateRepos pagiData={repos}/>
-            </tbody>
-          </table>
+        <div className="col-6 border border-danger">
+           
+           
+              <PaginateRepos pagiData={{repos, loading}}/>
+              {/* <PaginateRepos pagiData={repos}/> */}
+             
         </div>
-        <div className="col-4 border border-danger">3 of 3</div>
+        <div className="col-3 border border-danger">3 of 3</div>
       </div>
-      {/* <div className="row">
-        <div className="col">1 of 3</div>
-        <div className="col-5">2 of 3 (wider)</div>
-        <div className="col">3 of 3</div>
-      </div> */}
+      
     </div>
   );
 };
