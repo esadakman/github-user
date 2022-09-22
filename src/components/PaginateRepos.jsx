@@ -5,7 +5,7 @@ import RepoDetails from "./RepoDetails";
 import loadingGif from '../assets/loading.svg'
 
 const PaginateRepos = ({ pagiData }) => {
-  const { loading, repos, userName } = pagiData;
+  const { loading, repos, repoUrl } = pagiData;
   const [reposPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(1);
   const [details, setDetails] = useState("");
@@ -20,7 +20,7 @@ const PaginateRepos = ({ pagiData }) => {
     setDetailsLoading(true);
     axios({
       method: "get",
-      url: `https://api.github.com/repos/${userName}/${repoName}`,
+      url: `https://api.github.com/repos/${repoUrl}/${repoName}`,
     }).then((res) => {
       // console.log(res.data);
       setDetailsLoading(false);

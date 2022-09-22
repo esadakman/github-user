@@ -8,6 +8,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [info, setInfo] = useState("");
   const [repos, setRepos] = useState([]);
+  const [repoUrl, setRepoUrl] = useState("")
 
   const githubUserUrl = `https://api.github.com/users/${userName}`;
   const githubRepos = `https://api.github.com/users/${userName}/repos?per_page=100`;
@@ -37,6 +38,8 @@ const Home = () => {
     e.preventDefault();
     searchUser();
     searchRepos(); 
+    setRepoUrl(userName) 
+    setUserName("")
   }
 
   return (
@@ -66,7 +69,7 @@ const Home = () => {
             <ProfileCard info={info} />
           </div>
           <div className="col-lg-7  ">
-            <PaginateRepos pagiData={{ repos, loading, userName }} />
+            <PaginateRepos pagiData={{ repos, loading, repoUrl}} />
           </div>
         </div>
       ) : (
